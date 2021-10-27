@@ -1,4 +1,4 @@
-package ua.ithillel.current;
+package com.company;
 
 public interface CoordinateFinder {
     MoveResult findCoordinate();
