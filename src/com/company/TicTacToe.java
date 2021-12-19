@@ -1,26 +1,42 @@
 package com.company;
 
+import java.util.Arrays;
+import java.util.Scanner;
+
+
 public class TicTacToe {
 
     private static final char EMPTY_SYMBOL = '-';
-    private static final int FIELD_SIZE = 3;
+    public static final byte FIELD_SIZE = 3;
+    private final Scanner scanner = new Scanner(System.in);
 
-    private final char[][] field = {
+    public static char[][] field = {
             {EMPTY_SYMBOL, EMPTY_SYMBOL, EMPTY_SYMBOL},
             {EMPTY_SYMBOL, EMPTY_SYMBOL, EMPTY_SYMBOL},
             {EMPTY_SYMBOL, EMPTY_SYMBOL, EMPTY_SYMBOL},
     };
 
+
+
     public void start() {
-        CoordinateFinder playerMoveAction = new PlayerCoordinateFinder();
-        CoordinateFinder aiMoveAction = new AICoordinateFinder();
+        do {
+            field = createField();
+            CoordinateFinder playerMoveAction = new PlayerCoordinateFinder();
+            CoordinateFinder aiMoveAction = new AICoordinateFinder();
+            GameResult gameResult = new GameResult();
+            drawField();
+            doMove(playerMoveAction);
+            doMove(aiMoveAction);
 
-        drawField();
+            while (!gameResult.isGameEnd(field)) {
+                doMove(playerMoveAction);
+                gameResult.isGameEnd(field);
+                doMove(aiMoveAction);
+                drawField();
+            }
+        }while (startNew());
 
-        doMove(playerMoveAction);
-        doMove(aiMoveAction);
 
-        drawField();
     }
 
     private void doMove(CoordinateFinder coordinateFinder) {
@@ -35,6 +51,15 @@ public class TicTacToe {
         field[coordinate.getVertical()][coordinate.getHorizontal()] = moveResult.getSymbol();
     }
 
+    private char[][] createField() {
+            char[][] field = new char[FIELD_SIZE] [FIELD_SIZE];
+            for (char[] chars : field) {
+                Arrays.fill(chars, EMPTY_SYMBOL);
+        }
+
+        return field;
+    }
+
     private void drawField() {
         for (int i = 0; i < field.length; i++) {
             for (int j = 0; j < field.length; j++) {
@@ -44,5 +69,12 @@ public class TicTacToe {
             System.out.println();
         }
     }
+
+    protected boolean startNew(){
+
+        return true;
+    }
+
+
 
 }

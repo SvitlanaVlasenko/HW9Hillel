@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class PlayerCoordinateFinder implements CoordinateFinder {
 
-    private static final char PLAYER_SYMBOL = 'X';
+    public static final char PLAYER_SYMBOL = 'X';
 
     private final Scanner scanner = new Scanner(System.in);
 
